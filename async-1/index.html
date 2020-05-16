@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script>
+		function loadScript(src, callback) {
+			const script = document.createElement('script');
+			script.src = src;
+			script.onload = () => callback(null, script);
+			script.onerror = () => callback(new Error('script not loaded'));
+			document.head.append(script);
+		}
+
+		function handleError(err) {
+			console.log('script is not loaded');
+		}
+
+		// loadScript('index.js');	
+		// console.log("I'm done first");
+
+		loadScript('http://code.jquery.com/jquery-3.3.1.min.js', (error, script) => {
+			if (error) {
+				handleError(error);
+			} else {
+				console.log('jQuery loaded');
+				loadScript('https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js', (error, script) => {
+					if (error) {
+						handleError(error);
+					} else {
+						console.log('lodash loaded');
+						loadScript('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', (error, script) => {
+							if (error) {
+								handleError(error);
+							} else {
+								console.log('bootstrap loaded');
+								loadScript('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', (error, script) => {
+									if (error) {
+										handleError(error);
+									} else {
+										console.log('popper loaded');
+									}
+									//...
+									// callback hell
+								});
+							}
+
+						});
+					}
+
+				});
+			}
+		});
+
+	</script>
+</head>
+
+<body>
+	<h2>Hello World</h2>
+	<p id="test">Test</p>
+</body>
+
+</html>
